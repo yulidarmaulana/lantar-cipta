@@ -1,17 +1,17 @@
 // Site configuration
 export const SITE = {
-  title: 'AstroFlow',
-  description: 'Leading provider of optimized logistics and manufacturing solutions with state-of-the-art facilities and industry expertise.',
-  url: 'https://yourdomain.com',
-  author: 'AstroFlow',
+  title: 'Lantar Cipta Media',
+  description: 'KONSULTAN TEKNOLOGI, INFORMASI DAN JASA, KONSULTASI LAINNYA',
+  url: 'https://lantarciptamedia.co.id/#',
+  author: 'Lantar Cipta Media',
 } as const;
 
 export const NAVIGATION = [
   { name: 'Home', href: '/' },
-  { name: 'Capabilities', href: '/capabilities' },
-  { name: 'Use Cases', href: '/use-cases' },
-  { name: 'Facilities', href: '/facilities' },
-  { name: 'Request Quote', href: '/rfq' },
+  { name: 'About Us', href: '/capabilities' },
+  { name: 'Portofolio', href: '/use-cases' },
+  // { name: 'Services', href: '/facilities' },
+  { name: 'Career', href: '/rfq' },
   { name: 'Documentation', href: '/documentation' },
 ] as const;
 

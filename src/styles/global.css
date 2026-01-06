@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
-/* Smooth scrolling */
+/* Font Configuration */
 html {
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   @apply scroll-smooth;
 }
 
 .nav-active {
-  @apply after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-blue-300 hover:after:bg-transparent after:rounded-full;
+  @apply text-black bg-[#A9CE3C]/80 rounded-lg;
 }
 
 /* Animations */

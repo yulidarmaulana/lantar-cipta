@@ -7,6 +7,7 @@ import {
   Package, 
   UtensilsCrossed,
   CheckCircle2,
+  Telescope,
   AlertCircle,
   Lightbulb
 } from 'lucide-react';
@@ -100,12 +101,12 @@ export default function UseCaseTabs({ useCases }: Props) {
                 <div className="lg:col-span-7 p-8 lg:p-10">
                   <div className="space-y-6">
                     {/* Challenge */}
-                    <div className="bg-red-50 border-l-4 border-red-500 rounded-r-lg p-5">
+                    <div className="bg-green-50 border-l-4 border-green-500 rounded-r-lg p-5">
                       <div className="flex items-start gap-3">
-                        <AlertCircle className="w-6 h-6 text-red-600 shrink-0 mt-0.5" />
+                        {/* <AlertCircle className="w-6 h-6 text-red-600 shrink-0 mt-0.5" /> */}
                         <div>
-                          <h3 className="text-lg font-bold text-red-900 mb-2">
-                            Challenge
+                          <h3 className="text-lg font-bold text-green-900 mb-2">
+                            Deskripsi 
                           </h3>
                           <p className="text-gray-700 leading-relaxed">
                             {useCase.challenge}
@@ -115,7 +116,7 @@ export default function UseCaseTabs({ useCases }: Props) {
                     </div>
 
                     {/* Solution */}
-                    <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-lg p-5">
+                    {/* <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-lg p-5">
                       <div className="flex items-start gap-3">
                         <Lightbulb className="w-6 h-6 text-blue-600 shrink-0 mt-0.5" />
                         <div>
@@ -127,13 +128,13 @@ export default function UseCaseTabs({ useCases }: Props) {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Results */}
                     <div>
                       <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 text-green-600" />
-                        Results
+                        <Telescope className="w-5 h-5 text-green-600" />
+                        Portofolio
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {useCase.results.map((result, idx) => (
