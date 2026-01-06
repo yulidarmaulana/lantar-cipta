@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yulidar.github.io/lantar-cipta',
+  site: 'https://yulidarmaulana.github.io/lantar-cipta',
   base: '/lantar-cipta',
   integrations: [react()],
   vite: {
