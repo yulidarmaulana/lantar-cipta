@@ -1,6 +1,8 @@
 ---
-import { NAVIGATION, SOCIAL_LINKS, SITE } from '@config/site';
-import { Package, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { NAVIGATION, SOCIAL_LINKS, SITE } from "@config/site";
+import { Package, Linkedin, Twitter, Facebook } from "lucide-react";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <footer class="bg-[#0D625F] text-slate-300">
@@ -8,12 +10,12 @@ import { Package, Linkedin, Twitter, Facebook } from 'lucide-react';
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-4">
       <!-- Company Info -->
       <div class="lg:col-span-1 space-y-6">
-        <a href="/" class="flex items-center space-x-3 group">
-         <img
-          src="/favicon-lcm.png"
-          alt="Lantar Cipta Media Logo"
-          class="h-10 w-10 transition-transform group-hover:scale-110"
-        />
+        <a href={`${baseUrl}/`} class="flex items-center space-x-3 group">
+          <img
+            src={`${baseUrl}/favicon-lcm.png`}
+            alt="Lantar Cipta Media Logo"
+            class="h-10 w-10 transition-transform group-hover:scale-110"
+          />
           <span class="text-2xl font-bold text-white">
             Lantar Cipta Media
           </span>
@@ -48,57 +50,92 @@ import { Package, Linkedin, Twitter, Facebook } from 'lucide-react';
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+        <h3
+          class="text-sm font-semibold uppercase tracking-wider text-white mb-6"
+        >
           Links
         </h3>
         <ul class="space-y-3">
-          {NAVIGATION.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
-              >
-                <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
-                {item.name}
-              </a>
-            </li>
-          ))}
+          {
+            NAVIGATION.map((item) => (
+              <li>
+                <a
+                  href={
+                    item.href.startsWith("/")
+                      ? `${baseUrl}${item.href}`
+                      : item.href
+                  }
+                  class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+                >
+                  <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2" />
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <!-- Services -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+        <h3
+          class="text-sm font-semibold uppercase tracking-wider text-white mb-6"
+        >
           Our Services
         </h3>
         <ul class="space-y-3">
           <li>
-            <a href="/capabilities" class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <a
+              href={`${baseUrl}/capabilities`}
+              class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               Software Development
             </a>
           </li>
           <li>
-            <a href="/capabilities" class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <a
+              href={`${baseUrl}/capabilities`}
+              class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               Multimedia Production
             </a>
           </li>
           <li>
-            <a href="/capabilities" class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <a
+              href={`${baseUrl}/capabilities`}
+              class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               Networking Server
             </a>
           </li>
           <li>
-            <a href="/capabilities" class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <a
+              href={`${baseUrl}/capabilities`}
+              class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               Graphics Design
             </a>
           </li>
-           <li>
-            <a href="/capabilities" class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+          <li>
+            <a
+              href={`${baseUrl}/capabilities`}
+              class="text-sm text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               Technology Consulting
             </a>
           </li>
@@ -107,52 +144,81 @@ import { Package, Linkedin, Twitter, Facebook } from 'lucide-react';
 
       <!-- Contact -->
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+        <h3
+          class="text-sm font-semibold uppercase tracking-wider text-white mb-6"
+        >
           Get in Touch
         </h3>
         <ul class="space-y-3 text-sm">
           <li>
-            <span>Location :</span> <br>
-            <a href="/rfq" class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <span>Location :</span>
+            <br />
+            <a
+              href={`${baseUrl}/rfq`}
+              class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               JL. Rajawali 1 No. 2 Manahan, Banjarsari, Surakarta.
             </a>
           </li>
           <li>
-            <span>Email :</span><br>
-            <a href="/facilities" class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <span>Email :</span><br />
+            <a
+              href={`${baseUrl}/facilities`}
+              class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               phicos.id@gmail.com
             </a>
           </li>
           <li>
-            <span>Phone :</span><br>
-            <a href="/documentation" class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group">
-              <span class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"></span>
+            <span>Phone :</span><br />
+            <a
+              href={`${baseUrl}/documentation`}
+              class="text-slate-100 hover:text-green-400 transition-colors inline-flex items-center group"
+            >
+              <span
+                class="w-0 group-hover:w-2 h-0.5 bg-green-400 transition-all mr-0 group-hover:mr-2"
+              ></span>
               (0271) 7462445
             </a>
           </li>
         </ul>
-        
       </div>
     </div>
 
     <!-- Bottom Bar -->
     <div class="mt-16 pt-8 border-t border-slate-800">
-      <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+      <div
+        class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0"
+      >
         <p class="text-sm text-slate-100">
-          &copy; {new Date().getFullYear()} {SITE.author}. All rights reserved.
+          &copy; {new Date().getFullYear()}
+          {SITE.author}. All rights reserved.
         </p>
         <div class="flex items-center space-x-6 text-sm">
-          <a href="/" class="text-slate-100 hover:text-green-400 transition-colors">
+          <a
+            href={`${baseUrl}/`}
+            class="text-slate-100 hover:text-green-400 transition-colors"
+          >
             Privacy Policy
           </a>
           <span class="text-slate-700">•</span>
-          <a href="/" class="text-slate-100 hover:text-green-400 transition-colors">
+          <a
+            href={`${baseUrl}/`}
+            class="text-slate-100 hover:text-green-400 transition-colors"
+          >
             Terms of Service
           </a>
           <span class="text-slate-700">•</span>
-          <a href="/" class="text-slate-100 hover:text-green-400 transition-colors">
+          <a
+            href={`${baseUrl}/`}
+            class="text-slate-100 hover:text-green-400 transition-colors"
+          >
             Cookie Policy
           </a>
         </div>

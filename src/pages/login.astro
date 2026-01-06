@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <BaseLayout
@@ -13,7 +15,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <!-- Logo and Header -->
       <div class="text-center">
         <img
-          src="/favicon-lcm.png"
+          src={`${baseUrl}/favicon-lcm.png`}
           alt="Lantar Cipta Media Logo"
           class="mx-auto h-16 w-16 mb-4"
         />
@@ -192,7 +194,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               </svg>
               Google
             </button>
-            
           </div>
         </form>
 
@@ -213,7 +214,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <!-- Back to Home -->
       <div class="text-center">
         <a
-          href="/"
+          href={`${baseUrl}/`}
           class="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 transition-colors"
         >
           <svg

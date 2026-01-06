@@ -4,8 +4,13 @@ import { Package, UserIcon } from "lucide-react";
 import MobileMenu from "@components/react/MobileMenu";
 
 const { currentPathname } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, ""); // Remove trailing slash if exists
+
 const isActiveLink = (href: string): boolean => {
-  return href === currentPathname;
+  const normalizedHref = href.startsWith("/") ? `${baseUrl}${href}` : href;
+  const normalizedPath = currentPathname.replace(/\/$/, "");
+  const normalizedTarget = normalizedHref.replace(/\/$/, "");
+  return normalizedTarget === normalizedPath;
 };
 ---
 
@@ -17,9 +22,9 @@ const isActiveLink = (href: string): boolean => {
   >
     <!-- Logo -->
     <div class="flex items-center">
-      <a href="/" class="flex items-center space-x-3 group">
+      <a href={`${baseUrl}/`} class="flex items-center space-x-3 group">
         <img
-          src="/favicon-lcm.png"
+          src={`${baseUrl}/favicon-lcm.png`}
           alt="Lantar Cipta Media Logo"
           class="h-10 w-10 transition-transform group-hover:scale-110"
         />
@@ -36,9 +41,12 @@ const isActiveLink = (href: string): boolean => {
       {
         NAVIGATION.map((item) => {
           const isActive = isActiveLink(item.href);
+          const fullHref = item.href.startsWith("/")
+            ? `${baseUrl}${item.href}`
+            : item.href;
           return (
             <a
-              href={item.href}
+              href={fullHref}
               class={`px-4 py-2 text-sm font-medium text-slate-700 hover:text-black hover:bg-[#A9CE3C]/50 rounded-lg transition-all relative group ${isActive ? "nav-active" : ""}`}
             >
               {item.name}
@@ -51,7 +59,7 @@ const isActiveLink = (href: string): boolean => {
     <!-- CTA Button -->
     <div class="hidden lg:flex lg:items-center lg:space-x-4">
       <a
-        href="/login"
+        href={`${baseUrl}/login`}
         class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white
            bg-linear-to-r from-[#A9CE3C] to-[#8FAF33]
            hover:from-[#96B835] hover:to-[#7E9E2E]
@@ -59,7 +67,6 @@ const isActiveLink = (href: string): boolean => {
            hover:shadow-lg transition-all duration-300"
       >
         Login
-
       </a>
     </div>
 
