@@ -49,10 +49,10 @@ export default function UseCaseTabs({ useCases }: Props) {
             <Tabs.Trigger
               key={industry}
               value={industry}
-              className="group px-6 py-3 text-sm font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-300 transition-all duration-200 data-[state=active]:text-blue-600 data-[state=active]:border-blue-600 flex items-center gap-2"
+              className="group px-6 py-3 text-sm font-semibold text-gray-600 border-b-2 border-transparent hover:text-green-600 hover:border-green-300 transition-all duration-200 data-[state=active]:text-green-600 data-[state=active]:border-green-600 flex items-center gap-2"
             >
               {IconComponent && (
-                <IconComponent className="w-4 h-4 group-data-[state=active]:text-blue-600" />
+                <IconComponent className="w-4 h-4 group-data-[state=active]:text-green-600" />
               )}
               {industry}
             </Tabs.Trigger>
@@ -86,7 +86,7 @@ export default function UseCaseTabs({ useCases }: Props) {
                   <div className="absolute top-6 left-6">
                     <div className="w-16 h-16 rounded-xl bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
                       {IconComponent && (
-                        <IconComponent className="w-8 h-8 text-blue-600" />
+                        <IconComponent className="w-8 h-8 text-green-600" />
                       )}
                     </div>
                   </div>
