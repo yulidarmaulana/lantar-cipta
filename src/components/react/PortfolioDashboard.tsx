@@ -10,18 +10,14 @@ import {
   Image as ImageIcon,
   Layout,
   Type,
-  ChevronRight,
   PlusCircle,
-  AlertCircle,
-  LogOut
+  AlertCircle
 } from 'lucide-react';
 
 const CATEGORIES = ["Software Development", "Mobile App", "Multimedia", "Networking"];
 
 export default function PortfolioDashboard() {
   const { projects, isLoading: isStoreLoading, addProject, updateProject, deleteProject } = usePortfolioStore();
-  const [session, setSession] = useState<any>(null);
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState<Omit<Project, 'id'>>({
@@ -31,27 +27,6 @@ export default function PortfolioDashboard() {
     image: '',
     tags: []
   });
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setIsAuthLoading(false);
-      if (!session) {
-        window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/login`;
-      }
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/login`;
-  };
 
   const resetForm = () => {
     setFormData({
@@ -106,7 +81,7 @@ export default function PortfolioDashboard() {
     setFormData({ ...formData, tags: formData.tags.filter((t: string) => t !== tagToRemove) });
   };
 
-  if (isAuthLoading || isStoreLoading) {
+  if (isStoreLoading) {
     return (
       <div className="flex items-center justify-center p-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#A9CE3C]"></div>
@@ -114,19 +89,11 @@ export default function PortfolioDashboard() {
     );
   }
 
-  if (!session) return null;
-
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
-      {/* Header Info */}
-      <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div className="space-y-8">
+      {/* Header Info - Simplified as layout handles most */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h2 className="text-3xl font-bold text-slate-900">Portfolio Management</h2>
-            <span className="px-3 py-1 bg-green-50 text-[#A9CE3C] text-[10px] font-bold uppercase rounded-full border border-green-100">
-              Supabase Connected
-            </span>
-          </div>
           <p className="text-slate-500">Manage your projects stored in Supabase Database.</p>
         </div>
         <div className="flex gap-4">
@@ -139,13 +106,6 @@ export default function PortfolioDashboard() {
               Add Project
             </button>
           )}
-          <button
-            onClick={handleLogout}
-            className="inline-flex items-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-600 px-6 py-3 rounded-xl font-bold transition-all"
-          >
-            <LogOut className="w-5 h-5" />
-            Logout
-          </button>
         </div>
       </div>
 

@@ -1,0 +1,181 @@
+---
+import "../styles/global.css";
+import { SITE } from "@config/site";
+import {
+  LayoutDashboard,
+  ChevronLeft,
+  LogOut,
+  Settings,
+  ExternalLink,
+  Package,
+  HelpCircle,
+} from "lucide-react";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Admin Dashboard" } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href={`${baseUrl}/favicon-lcm.png`} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title} | {SITE.name} Admin</title>
+  </head>
+  <body class="bg-gray-50 text-slate-900 font-['Google_Sans'] antialiased">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="w-64 bg-slate-900 text-white flex flex-col fixed inset-y-0 left-0 z-50"
+      >
+        <!-- Sidebar Brand -->
+        <div class="p-6 border-b border-slate-800">
+          <a href={`${baseUrl}/`} class="flex items-center gap-3 group">
+            <img
+              src={`${baseUrl}/favicon-lcm.png`}
+              alt="Logo"
+              class="w-8 h-8"
+            />
+            <span class="font-bold text-lg tracking-tight">Admin LCM</span>
+          </a>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+          <div
+            class="text-[10px] font-bold text-slate-500 uppercase px-4 mb-2 tracking-widest"
+          >
+            Main Menu
+          </div>
+
+          <a
+            href={`${baseUrl}/admin/dashboard`}
+            class={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+              currentPath.includes("/admin/dashboard")
+                ? "bg-[#A9CE3C]/10 text-[#A9CE3C]"
+                : "text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <LayoutDashboard className="w-5 h-5" />
+            Portfolio
+          </a>
+
+          <a
+            href={`${baseUrl}/admin/faq`}
+            class={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+              currentPath.includes("/admin/faq")
+                ? "bg-[#A9CE3C]/10 text-[#A9CE3C]"
+                : "text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <HelpCircle className="w-5 h-5" />
+            FAQs
+          </a>
+
+          <div
+            class="pt-6 text-[10px] font-bold text-slate-500 uppercase px-4 mb-2 tracking-widest"
+          >
+            System
+          </div>
+
+          <a
+            href={`${baseUrl}/`}
+            class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all"
+          >
+            <ExternalLink className="w-5 h-5" />
+            View Website
+          </a>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-slate-800">
+          <button
+            id="admin-logout-btn"
+            class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
+          >
+            <LogOut className="w-5 h-5" />
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="flex-1 ml-64 flex flex-col">
+        <!-- Top Header -->
+        <header
+          class="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-40"
+        >
+          <div class="flex items-center gap-4">
+            <h1 class="text-xl font-bold text-slate-900">{title}</h1>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div
+              id="auth-user-badge"
+              class="hidden sm:flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-full border border-gray-100"
+            >
+              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse">
+              </div>
+              <span
+                id="auth-user-email"
+                class="text-xs font-semibold text-slate-600 uppercase tracking-tight"
+                >Admin</span
+              >
+            </div>
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-8">
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <!-- Auth Protection & Logic Script -->
+    <script>
+      import { supabase } from "../lib/supabaseClient";
+
+      const logoutBtn = document.getElementById("admin-logout-btn");
+      const userEmailSpan = document.getElementById("auth-user-email");
+      const userBadge = document.getElementById("auth-user-badge");
+      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+      // Check Session & Update UI
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) {
+          window.location.href = `${baseUrl}/login`;
+        } else {
+          if (userEmailSpan && session.user.email) {
+            userEmailSpan.textContent = session.user.email;
+            userBadge?.classList.remove("hidden");
+          }
+        }
+      });
+
+      // Handle Logout
+      logoutBtn?.addEventListener("click", async () => {
+        if (confirm("Are you sure you want to sign out?")) {
+          await supabase.auth.signOut();
+          window.location.href = `${baseUrl}/login`;
+        }
+      });
+    </script>
+  </body>
+</html>

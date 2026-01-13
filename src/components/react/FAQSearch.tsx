@@ -1,129 +1,155 @@
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Search, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Search, ChevronDown, ChevronUp, HelpCircle, MessageCircle, ArrowRight } from "lucide-react";
+import { useFAQStore, type FAQ } from "../../store/faqStore";
 
-interface FAQ {
-  question: string;
-  answer: string;
-}
+export default function FAQSearch() {
+  const { faqs, isLoading } = useFAQStore();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState("All");
 
-interface Props {
-  faqs: FAQ[];
-}
+  const categories = ["All", ...Array.from(new Set(faqs.map(f => f.category)))];
 
-export default function FAQSearch({ faqs }: Props) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const filteredFaqs = faqs.filter((faq) => {
+    const matchesQuery =
+      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === "All" || faq.category === activeCategory;
+    return matchesQuery && matchesCategory;
+  });
 
-  const filteredFaqs = useMemo(() => {
-    if (!searchQuery.trim()) return faqs;
-
-    const query = searchQuery.toLowerCase();
-    return faqs.filter(faq =>
-      faq.question.toLowerCase().includes(query) ||
-      faq.answer.toLowerCase().includes(query)
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#A9CE3C]"></div>
+      </div>
     );
-  }, [searchQuery, faqs]);
-
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  }
 
   return (
-    <div className="w-full">
-      {/* Search Input */}
-      <div className="min-w-xl mx-auto mb-16 px-4">
-        <div className="bg-white p-4 rounded-2xl shadow-xl border-2 border-gray-100">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+    <div className="max-w-none w-full mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
+      {/* Search and Category Filter */}
+      <div className="bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
-              placeholder="Search documentation, guides, and resources..."
+              placeholder="How can we help you today?"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg outline-hidden"
+              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#A9CE3C] focus:bg-white outline-none transition-all text-slate-900 placeholder-slate-400"
             />
           </div>
-          {searchQuery && (
-            <p className="mt-4 text-sm text-gray-500">
-              Found {filteredFaqs.length} results for "{searchQuery}"
-            </p>
-          )}
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-6 py-4 rounded-2xl text-sm font-bold whitespace-nowrap transition-all ${activeCategory === cat
+                    ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20"
+                    : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+                  }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* FAQ List */}
-      <div className="min-w-xl mx-auto space-y-4 px-4">
+      <div className="space-y-4">
         <AnimatePresence mode="popLayout">
-          {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq, index) => {
-              const originalIndex = faqs.findIndex(f => f.question === faq.question);
-              const isOpen = openIndex === originalIndex;
-
-              return (
-                <motion.div
-                  key={faq.question}
-                  layout
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white rounded-2xl border-2 border-gray-100 hover:border-blue-200 transition-colors shadow-xs"
-                >
-                  <button
-                    onClick={() => toggleAccordion(originalIndex)}
-                    className="w-full text-left p-6 focus:outline-hidden"
-                  >
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-900 pr-4 group-hover:text-blue-600 transition-colors">
-                        {faq.question}
-                      </h3>
-                      <ChevronDown
-                        className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                      />
-                    </div>
-
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-4 pt-4 border-t border-gray-100">
-                            <p className="text-gray-600 leading-relaxed">
-                              {faq.answer}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </button>
-                </motion.div>
-              );
-            })
-          ) : (
+          {filteredFaqs.map((faq) => (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
+              layout
+              key={faq.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className={`bg-white rounded-3xl overflow-hidden border transition-all duration-300 ${activeId === faq.id
+                  ? "border-[#A9CE3C] shadow-2xl shadow-[#A9CE3C]/10"
+                  : "border-slate-100 shadow-sm hover:shadow-md"
+                }`}
             >
-              <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-gray-300" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
-              <p className="text-gray-500">We couldn't find any FAQs matching your search query.</p>
               <button
-                onClick={() => setSearchQuery('')}
-                className="mt-4 text-blue-600 font-semibold hover:underline"
+                onClick={() => setActiveId(activeId === faq.id ? null : faq.id)}
+                className="w-full text-left p-6 md:p-8 flex items-center justify-between gap-6 group"
               >
-                Clear search
+                <div className="flex items-center gap-6">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${activeId === faq.id ? "bg-[#A9CE3C] text-white" : "bg-slate-50 text-[#A9CE3C] group-hover:bg-[#A9CE3C]/10"
+                    }`}>
+                    <HelpCircle className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-[#A9CE3C] uppercase tracking-widest mb-1 block">
+                      {faq.category}
+                    </span>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 leading-tight">
+                      {faq.question}
+                    </h3>
+                  </div>
+                </div>
+                <div className={`p-2 rounded-full transition-colors ${activeId === faq.id ? "bg-[#A9CE3C]/10 text-[#A9CE3C]" : "text-slate-300 group-hover:text-slate-900"
+                  }`}>
+                  {activeId === faq.id ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
+                </div>
               </button>
+
+              <motion.div
+                initial={false}
+                animate={{ height: activeId === faq.id ? "auto" : 0, opacity: activeId === faq.id ? 1 : 0 }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 md:px-8 pb-8 pt-2">
+                  <div className="h-px bg-slate-100 mb-6" />
+                  <div className="flex gap-6">
+                    <div className="w-12 shrink-0 hidden md:flex items-start justify-center pt-1">
+                      <MessageCircle className="w-6 h-6 text-slate-200" />
+                    </div>
+                    <p className="text-slate-600 leading-relaxed text-lg">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          )}
+          ))}
         </AnimatePresence>
+
+        {filteredFaqs.length === 0 && !isLoading && (
+          <div className="text-center py-20 bg-slate-50 rounded-[40px] border-2 border-dashed border-slate-200">
+            <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+              <Search className="w-10 h-10 text-slate-300" />
+            </div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">No results found</h3>
+            <p className="text-slate-500 max-w-sm mx-auto">
+              We couldn't find any FAQs matching your search criteria. Please try different keywords.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Support CTA */}
+      <div className="bg-slate-900 rounded-[40px] p-8 md:p-12 text-white overflow-hidden relative group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#A9CE3C] blur-[120px] opacity-20 -mr-32 -mt-32" />
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">Still have questions?</h3>
+            <p className="text-slate-400 max-w-md">
+              Can't find the answer you're looking for? Please contact our support team.
+            </p>
+          </div>
+          <a
+            href="mailto:support@lantarciptamedia.com"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#A9CE3C] hover:bg-[#96B835] text-white rounded-2xl font-bold transition-all shadow-lg shadow-[#A9CE3C]/20"
+          >
+            Contact Support
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </div>
       </div>
     </div>
   );
