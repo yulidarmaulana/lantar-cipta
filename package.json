@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@radix-ui/themes": "^3.2.1",
+    "@supabase/supabase-js": "^2.90.1",
     "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

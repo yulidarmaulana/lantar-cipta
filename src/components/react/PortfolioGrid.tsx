@@ -1,74 +1,24 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Tag, Search, Filter } from 'lucide-react';
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  tags: string[];
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Sistem Informasi Manajemen",
-    category: "Software Development",
-    description: "Pengembangan sistem manajemen terpadu untuk efisiensi operasional perusahaan.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-    tags: ["Web", "Management", "Enterprise"]
-  },
-  {
-    id: 2,
-    title: "Aplikasi Mobile Pelayanan",
-    category: "Mobile App",
-    description: "Aplikasi berbasis Android untuk mempermudah akses pelayanan publik bagi warga.",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
-    tags: ["Android", "UI/UX", "Service"]
-  },
-  {
-    id: 3,
-    title: "Virtual Panorama",
-    category: "Multimedia",
-    description: "Produksi konten panorama virtual 360 derajat untuk tur digital interaktif.",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
-    tags: ["360 VR", "Multimedia", "Interactive"]
-  },
-  {
-    id: 4,
-    title: "Sistem Informasi Geografis",
-    category: "Software Development",
-    description: "Pemetaan aset dan visualisasi data spasial menggunakan teknologi GIS terkini.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-    tags: ["GIS", "Mapping", "Analysis"]
-  },
-  {
-    id: 5,
-    title: "Video Profile Perusahaan",
-    category: "Multimedia",
-    description: "Produksi video sinematik untuk memperkuat branding dan identitas perusahaan.",
-    image: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&q=80&w=800",
-    tags: ["Video", "Branding", "Creative"]
-  },
-  {
-    id: 6,
-    title: "Audit Jaringan Instansi",
-    category: "Networking",
-    description: "Optimalisasi infrastruktur jaringan dan peningkatan keamanan server.",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800",
-    tags: ["Network", "Security", "Hardware"]
-  }
-];
+import { usePortfolioStore, type Project } from '../../store/portfolioStore';
 
 const categories = ["All", "Software Development", "Mobile App", "Multimedia", "Networking"];
 
 export default function PortfolioGrid() {
+  const { projects, isLoading } = usePortfolioStore();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredProjects = projects.filter(project => {
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#A9CE3C]"></div>
+      </div>
+    );
+  }
+
+  const filteredProjects = projects.filter((project: Project) => {
     const matchesCategory = activeCategory === "All" || project.category === activeCategory;
     const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -86,8 +36,8 @@ export default function PortfolioGrid() {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeCategory === category
-                  ? "bg-[#A9CE3C] text-white shadow-lg shadow-[#A9CE3C]/30"
-                  : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                ? "bg-[#A9CE3C] text-white shadow-lg shadow-[#A9CE3C]/30"
+                : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                 }`}
             >
               {category}
@@ -111,7 +61,7 @@ export default function PortfolioGrid() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project: Project) => (
             <motion.div
               layout
               key={project.id}
@@ -130,7 +80,7 @@ export default function PortfolioGrid() {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <div className="flex gap-2">
-                    {project.tags.map(tag => (
+                    {project.tags.map((tag: string) => (
                       <span key={tag} className="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-lg">
                         #{tag}
                       </span>

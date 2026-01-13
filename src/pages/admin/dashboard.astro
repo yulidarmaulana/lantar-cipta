@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/ui/Section.astro";
+import PortfolioDashboard from "../../components/react/PortfolioDashboard";
+
+// For static sites, this page is just a hidden route.
+// In a real app, you would add authentication here.
+---
+
+<BaseLayout title="Admin Dashboard - Lantar Cipta Media">
+  <div class="bg-gray-50 min-h-screen">
+    <!-- Admin Header -->
+    <div class="bg-slate-900 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div
+          class="flex items-center gap-4 text-[#A9CE3C] mb-2 uppercase tracking-widest text-sm font-bold"
+        >
+          <span class="w-8 h-[2px] bg-[#A9CE3C]"></span>
+          Admin Panel
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold">Dashboard</h1>
+      </div>
+    </div>
+
+    <!-- Dashboard Island -->
+    <Section background="gray">
+      <PortfolioDashboard client:only="react" />
+    </Section>
+  </div>
+</BaseLayout>

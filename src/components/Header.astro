@@ -1,7 +1,7 @@
 ---
 import { NAVIGATION } from "@config/site";
-import { Package, UserIcon } from "lucide-react";
 import MobileMenu from "@components/react/MobileMenu";
+import UserNav from "@components/react/UserNav";
 
 const { currentPathname } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, ""); // Remove trailing slash if exists
@@ -28,11 +28,6 @@ const isActiveLink = (href: string): boolean => {
           alt="Lantar Cipta Media Logo"
           class="h-10 w-10 transition-transform group-hover:scale-110"
         />
-        <!-- <span
-          class="text-2xl font-bold text-[#A9CE3C]"
-        >
-          Lantar Cipta Media
-        </span> -->
       </a>
     </div>
 
@@ -58,16 +53,7 @@ const isActiveLink = (href: string): boolean => {
 
     <!-- CTA Button -->
     <div class="hidden lg:flex lg:items-center lg:space-x-4">
-      <a
-        href={`${baseUrl}/login`}
-        class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white
-           bg-linear-to-r from-[#A9CE3C] to-[#8FAF33]
-           hover:from-[#96B835] hover:to-[#7E9E2E]
-           rounded-lg shadow-md shadow-[#A9CE3C]/40
-           hover:shadow-lg transition-all duration-300"
-      >
-        Login
-      </a>
+      <UserNav client:load />
     </div>
 
     <!-- Mobile Menu Button -->
