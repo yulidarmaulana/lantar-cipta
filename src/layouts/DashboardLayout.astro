@@ -38,7 +38,7 @@ const currentPath = Astro.url.pathname;
       rel="stylesheet"
     />
 
-    <title>{title} | {SITE.name} Admin</title>
+    <title>{title} | {SITE.title} Admin</title>
   </head>
   <body class="bg-gray-50 text-slate-900 font-['Google_Sans'] antialiased">
     <div class="flex min-h-screen">
@@ -174,6 +174,40 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
+    <!-- Sign Out Confirmation Modal -->
+    <div
+      id="logout-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+    >
+      <div
+        class="bg-white rounded-[32px] w-full max-w-sm shadow-2xl overflow-hidden animate-scaleIn p-8 text-center"
+      >
+        <div
+          class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <LogOut className="w-10 h-10 text-red-500" />
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">Sign Out?</h2>
+        <p class="text-slate-500 mb-8">
+          Are you sure you want to sign out from the admin dashboard?
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <button
+            id="close-logout-modal"
+            class="px-6 py-3 bg-gray-100 text-slate-600 rounded-xl font-bold hover:bg-gray-200 transition-all"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-logout-btn"
+            class="px-6 py-3 bg-red-500 text-white rounded-xl font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/30"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Auth Protection & Logic Script -->
     <script>
       import { supabase } from "../lib/supabaseClient";
@@ -183,11 +217,13 @@ const currentPath = Astro.url.pathname;
       const userBadge = document.getElementById("auth-user-badge");
       const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-      // Check Session & Update UI
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (!session) {
+      // Auth State Listener
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_OUT" || !session) {
           window.location.href = `${baseUrl}/login`;
-        } else {
+        } else if (session) {
           if (userEmailSpan && session.user.email) {
             userEmailSpan.textContent = session.user.email;
             userBadge?.classList.remove("hidden");
@@ -195,11 +231,43 @@ const currentPath = Astro.url.pathname;
         }
       });
 
-      // Handle Logout
-      logoutBtn?.addEventListener("click", async () => {
-        if (confirm("Are you sure you want to sign out?")) {
-          await supabase.auth.signOut();
+      // Initial check
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) {
           window.location.href = `${baseUrl}/login`;
+        }
+      });
+
+      const logoutModal = document.getElementById("logout-modal");
+      const confirmLogoutBtn = document.getElementById("confirm-logout-btn");
+      const closeLogoutModal = document.getElementById("close-logout-modal");
+
+      // Show Modal
+      logoutBtn?.addEventListener("click", () => {
+        logoutModal?.classList.remove("hidden");
+        logoutModal?.classList.add("flex");
+      });
+
+      // Hide Modal
+      closeLogoutModal?.addEventListener("click", () => {
+        logoutModal?.classList.add("hidden");
+        logoutModal?.classList.remove("flex");
+      });
+
+      // Confirm Logout
+      confirmLogoutBtn?.addEventListener("click", async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          console.error("Logout error:", error.message);
+          window.location.href = `${baseUrl}/login`;
+        }
+      });
+
+      // Close on backdrop click
+      logoutModal?.addEventListener("click", (e) => {
+        if (e.target === logoutModal) {
+          logoutModal.classList.add("hidden");
+          logoutModal.classList.remove("flex");
         }
       });
     </script>
