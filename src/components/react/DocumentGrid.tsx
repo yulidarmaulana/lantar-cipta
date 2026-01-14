@@ -37,7 +37,7 @@ export default function DocumentGrid() {
     <div className="space-y-12">
       {/* Search and Category Filter */}
       <div className="flex flex-col items-center space-y-8">
-        <div className="relative w-full max-w-2xl bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
+        <div className="relative w-full max-w-5xl bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
           <Search className="absolute left-10 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
