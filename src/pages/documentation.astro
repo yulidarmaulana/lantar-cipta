@@ -1,198 +1,183 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/ui/Section.astro';
-import Card from '../components/ui/Card.astro';
-import ImageReveal from '../components/react/ImageReveal';
-import FAQSearch from '../components/react/FAQSearch';
-import { Image } from 'astro:assets';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+import Card from "../components/ui/Card.astro";
+import ImageReveal from "../components/react/ImageReveal";
+import FAQSearch from "../components/react/FAQSearch";
+import DocumentGrid from "../components/react/DocumentGrid";
+import { Image } from "astro:assets";
 
-import serviceOverviewImg from '@assets/photo-1550751827-4bd374c3f58b.jpg';
-import heroBgImg from '@assets/photo-1454165804606-c3d57bc86b40.jpg';
+import serviceOverviewImg from "@assets/photo-1550751827-4bd374c3f58b.jpg";
+import heroBgImg from "@assets/photo-1454165804606-c3d57bc86b40.jpg";
 
 // Icon SVG paths
 const iconPaths = {
-  zap: 'M13 10V3L4 14h7v7l9-11h-7z',
-  book: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M6.5 17V2H20v15H6.5z',
-  code: 'm16 18 6-6-6-6M8 6l-6 6 6 6',
-  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-  lightbulb: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 1 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
-  fileText: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'
+  zap: "M13 10V3L4 14h7v7l9-11h-7z",
+  book: "M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M6.5 17V2H20v15H6.5z",
+  code: "m16 18 6-6-6-6M8 6l-6 6 6 6",
+  shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
+  lightbulb:
+    "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 1 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+  fileText:
+    "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
 };
 
 const docCategories = [
   {
-    title: 'Technical Documentation',
+    title: "Technical Documentation",
     iconPath: iconPaths.code,
     image: serviceOverviewImg,
-    color: 'from-green-500 to-emerald-500',
-    bgColor: 'bg-green-50',
-    iconColor: 'text-green-600',
+    color: "from-green-500 to-emerald-500",
+    bgColor: "bg-green-50",
+    iconColor: "text-green-600",
     docs: [
-      { title: 'Doc 1', description: 'Description 1', type: 'PDF', size: '6.2 MB' },
-      { title: 'Doc 2', description: 'Description 2', type: 'PDF', size: '4.8 MB' },
-      { title: 'Doc 3', description: 'Description 3', type: 'PDF', size: '8.5 MB' },
-      { title: 'Doc 4', description: 'Description 4', type: 'PDF', size: '3.1 MB' }
-    ]
-  }
+      {
+        title: "Doc 1",
+        description: "Description 1",
+        type: "PDF",
+        size: "6.2 MB",
+      },
+      {
+        title: "Doc 2",
+        description: "Description 2",
+        type: "PDF",
+        size: "4.8 MB",
+      },
+      {
+        title: "Doc 3",
+        description: "Description 3",
+        type: "PDF",
+        size: "8.5 MB",
+      },
+      {
+        title: "Doc 4",
+        description: "Description 4",
+        type: "PDF",
+        size: "3.1 MB",
+      },
+    ],
+  },
 ];
 
 const faqs = [
   {
-    question: 'What services does Lantar Cipta Media provide?',
-    answer: 'Lantar Cipta Media provides technology-based solutions including Software Development, Multimedia Production, Networking & Server Infrastructure, Graphic Design, and Technology Consulting. Our services are designed to help businesses improve efficiency and digital transformation.'
+    question: "What services does Lantar Cipta Media provide?",
+    answer:
+      "Lantar Cipta Media provides technology-based solutions including Software Development, Multimedia Production, Networking & Server Infrastructure, Graphic Design, and Technology Consulting. Our services are designed to help businesses improve efficiency and digital transformation.",
   },
   {
-    question: 'What industries does Lantar Cipta Media work with?',
-    answer: 'We work with various industries such as education, government institutions, SMEs, and private companies. Our solutions are flexible and tailored to meet each client’s specific needs and business goals.'
+    question: "What industries does Lantar Cipta Media work with?",
+    answer:
+      "We work with various industries such as education, government institutions, SMEs, and private companies. Our solutions are flexible and tailored to meet each client’s specific needs and business goals.",
   },
   {
-    question: 'Does Lantar Cipta Media offer custom software solutions?',
-    answer: 'Yes. We specialize in developing custom software solutions based on client requirements, including web applications, information systems, and integrated digital platforms that align with business processes.'
+    question: "Does Lantar Cipta Media offer custom software solutions?",
+    answer:
+      "Yes. We specialize in developing custom software solutions based on client requirements, including web applications, information systems, and integrated digital platforms that align with business processes.",
   },
   {
-    question: 'How can I start a project with Lantar Cipta Media?',
-    answer: 'You can start by contacting us through our website, email, or phone. Our team will discuss your requirements, analyze your needs, and propose the most suitable technology solution for your business.'
+    question: "How can I start a project with Lantar Cipta Media?",
+    answer:
+      "You can start by contacting us through our website, email, or phone. Our team will discuss your requirements, analyze your needs, and propose the most suitable technology solution for your business.",
   },
   {
-    question: 'Why choose Lantar Cipta Media as your IT consultant?',
-    answer: 'We combine technical expertise, industry experience, and a client-focused approach. Our team is committed to delivering reliable, scalable, and effective technology solutions while maintaining long-term partnerships with our clients.'
-  }
+    question: "Why choose Lantar Cipta Media as your IT consultant?",
+    answer:
+      "We combine technical expertise, industry experience, and a client-focused approach. Our team is committed to delivering reliable, scalable, and effective technology solutions while maintaining long-term partnerships with our clients.",
+  },
 ];
 ---
 
 <BaseLayout title="Documentation - Resources & Guides">
   <!-- Hero Section with Professional Background -->
-  <section class="relative h-[70vh] min-h-[500px] flex items-center overflow-hidden">
+  <section
+    class="relative h-[70vh] min-h-[500px] flex items-center overflow-hidden"
+  >
     <div class="absolute inset-0">
-      <Image 
+      <Image
         src={heroBgImg}
         alt="Professional documentation and resources"
         class="w-full h-full object-cover"
         width={2070}
         height={1380}
       />
-      <div class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+      <div
+        class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_70%)]"
+      >
+      </div>
     </div>
 
     <div class="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto text-center">
-        <div class="inline-flex items-center px-4 py-2 mb-6 bg-linear-to-r from-green-300 to-green-600 text-dark text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div
+          class="inline-flex items-center px-4 py-2 mb-6 bg-linear-to-r from-green-300 to-green-600 text-dark text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm"
+        >
+          <svg
+            class="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           Comprehensive Resource Center
         </div>
-        
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fadeInUp">
+
+        <h1
+          class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fadeInUp"
+        >
           Documentation
           <!-- <span class="text-transparent bg-clip-text bg-linear-to-r from-green-300 to-green-600">
             Documentation
           </span>  -->
         </h1>
-        
-        <p class="text-xl md:text-2xl text-slate-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fadeInUp" style="animation-delay: 0.1s">
-          Access comprehensive guides, technical documentation, compliance certificates, 
-          and resources to optimize your logistics operations.
-        </p>
 
+        <p
+          class="text-xl md:text-2xl text-slate-200 mb-8 max-w-3xl mx-auto leading-relaxed animate-fadeInUp"
+          style="animation-delay: 0.1s"
+        >
+          Access comprehensive guides, technical documentation, compliance
+          certificates, and resources to optimize your logistics operations.
+        </p>
       </div>
     </div>
 
     <!-- Scroll indicator -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <svg
+        class="w-6 h-6 text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"></path>
       </svg>
     </div>
   </section>
 
   <!-- Search Bar -->
   <Section background="gray">
-
-    <!-- Documentation Categories -->
-    <div class="space-y-20">
-      {docCategories.map((category, index) => {
-        const categoryId = category.title.toLowerCase().replace(/\s+/g, '-');
-        return (
-        <div class="animate-fadeInUp" style={`animation-delay: ${index * 0.1}s`} id={categoryId}>
-          <!-- Category Header with Image -->
-          <div class="mb-8">
-            <ImageReveal client:load delay={index * 0.1}>
-              <div class="relative h-64 rounded-2xl overflow-hidden shadow-2xl group">
-                <Image 
-                  src={category.image}
-                  alt={category.title}
-                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  width={2070}
-                  height={1380}
-                />
-                <div class={`absolute inset-0 bg-linear-to-r ${category.color} opacity-80`}></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="text-center text-white">
-                    <div class={`w-20 h-20 ${category.bgColor} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl backdrop-blur-sm bg-white/20 border-2 border-white/30`}>
-                      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={`${category.iconPath}`} />
-                      </svg>
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-2">{category.title}</h2>
-                    <p class="text-lg text-white/90">{category.docs.length} Documents Available</p>
-                  </div>
-                </div>
-              </div>
-            </ImageReveal>
-          </div>
-            
-            <!-- Documents Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.docs.map((doc, docIndex) => (
-                <ImageReveal client:load delay={index * 0.1 + docIndex * 0.05}>
-                  <Card hover class="cursor-pointer group h-full flex flex-col">
-                    <div class="flex-1">
-                      <div class="flex items-start justify-between mb-4">
-                        <div class={`w-12 h-12 ${category.bgColor} rounded-xl flex items-center justify-center ${category.iconColor} shadow-md group-hover:scale-110 transition-transform`}>
-                          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        </div>
-                        <span class={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${category.bgColor} ${category.iconColor} border border-current/20`}>
-                          {doc.type}
-                        </span>
-                      </div>
-                      
-                      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                        {doc.title}
-                      </h3>
-                      <p class="text-sm text-gray-600 mb-4 leading-relaxed">{doc.description}</p>
-                      
-                      <div class="flex items-center text-xs text-gray-500 mb-4">
-                        <span>Size: {doc.size}</span>
-                      </div>
-                    </div>
-                    
-                    <button class={`w-full mt-auto flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold text-white bg-linear-to-r ${category.color} hover:shadow-lg transition-all group-hover:scale-105`}>
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      <span>Download</span>
-                    </button>
-                  </Card>
-                </ImageReveal>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-    </div>
+    <DocumentGrid client:load />
   </Section>
-
-  
 
   <!-- FAQ Section -->
   <Section background="white" id="faq">
-
     <div class="text-center mb-12">
-      <div class="inline-block px-4 py-2 mb-4 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full">
+      <div
+        class="inline-block px-4 py-2 mb-4 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full"
+      >
         Support
       </div>
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -202,17 +187,16 @@ const faqs = [
         Quick answers to common questions about our documentation and resources.
       </p>
     </div>
-    
-    <FAQSearch client:load faqs={faqs} />
-  </Section>
 
+    <FAQSearch client:load />
+  </Section>
 </BaseLayout>
 
 <style>
   details summary::-webkit-details-marker {
     display: none;
   }
-  
+
   details[open] summary {
     margin-bottom: 0.5rem;
   }

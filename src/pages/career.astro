@@ -1,0 +1,193 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+import CareerForm from "../components/react/CareerForm";
+import { Image } from "astro:assets";
+import rfqBgImg from "../assets/photo-1521737604893-d14cc237f11d.jpg";
+---
+
+<BaseLayout
+  title="Careers | Join Our Team"
+  description="Lantar Cipta Media is looking for talented individuals to join our growing team of IT professionals."
+>
+  <!-- Hero Section -->
+  <section
+    class="relative h-[60vh] min-h-[500px] flex items-center overflow-hidden"
+  >
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0">
+      <Image
+        src={rfqBgImg}
+        alt="Professional logistics and supply chain management"
+        class="w-full h-full object-cover"
+        width={2070}
+        height={1380}
+      />
+      <div
+        class="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/80 to-slate-900/50"
+      >
+      </div>
+    </div>
+
+    <div class="container mx-auto relative z-10 px-4">
+      <div
+        class="flex items-center gap-4 text-[#A9CE3C] mb-4 uppercase tracking-widest text-sm font-bold animate-fade-in"
+      >
+        <span class="w-12 h-[2px] bg-[#A9CE3C]"></span>
+        Careers
+      </div>
+      <h1
+        class="text-4xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-linear-to-r from-green-300 to-green-600"
+      >
+        Join Our Growing Team
+      </h1>
+      <p class="text-xl text-slate-300 max-w-2xl leading-relaxed">
+        We're always looking for talented developers, designers, and innovators
+        to help us build the next generation of digital solutions.
+      </p>
+    </div>
+  </section>
+
+  <Section background="white">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      {/* Form Side */}
+      <div class="lg:col-span-7">
+        <div
+          class="bg-white rounded-[40px] shadow-2xl shadow-[#0D625F]/5 border border-slate-100 p-8 md:p-12 relative overflow-hidden"
+        >
+          <div class="relative z-10">
+            <div class="mb-10 text-center md:text-left">
+              <h2 class="text-3xl font-bold text-slate-900 mb-2">Apply Now</h2>
+              <p class="text-slate-500">
+                Submit your details and CV to start your journey with us.
+              </p>
+            </div>
+            <CareerForm client:load />
+          </div>
+        </div>
+      </div>
+
+      {/* Information Side */}
+      <div class="lg:col-span-5 space-y-10">
+        <div>
+          <h2 class="text-3xl font-bold text-slate-900 mb-6">Why Join Us?</h2>
+          <p class="text-slate-600 leading-relaxed mb-8">
+            At Lantar Cipta Media, we believe in fostering a culture of
+            innovation, collaboration, and continuous learning. We provide our
+            team members with the tools and support they need to excel in their
+            careers.
+          </p>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div
+                class="w-12 h-12 rounded-xl bg-[#A9CE3C]/10 flex items-center justify-center mr-4 shrink-0"
+              >
+                <svg
+                  class="w-6 h-6 text-[#A9CE3C]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 mb-1">
+                  Growth Opportunities
+                </h3>
+                <p class="text-slate-500 text-sm">
+                  Continuous learning and professional development path for
+                  every team member.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div
+                class="w-12 h-12 rounded-xl bg-[#A9CE3C]/10 flex items-center justify-center mr-4 shrink-0"
+              >
+                <svg
+                  class="w-6 h-6 text-[#A9CE3C]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 mb-1">
+                  Collaborative Environment
+                </h3>
+                <p class="text-slate-500 text-sm">
+                  Work alongside talented professionals in a supportive and
+                  inclusive culture.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div
+                class="w-12 h-12 rounded-xl bg-[#A9CE3C]/10 flex items-center justify-center mr-4 shrink-0"
+              >
+                <svg
+                  class="w-6 h-6 text-[#A9CE3C]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-10V4m0 10V4m-4 18h4"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 mb-1">Exciting Projects</h3>
+                <p class="text-slate-500 text-sm">
+                  Work on diverse and challenging projects for national and
+                  international clients.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 rounded-[32px] bg-slate-50 border border-slate-100">
+          <h3 class="text-xl font-bold text-slate-900 mb-4">Have Questions?</h3>
+          <p class="text-slate-500 mb-6">
+            Our recruitment team is here to help you through the application
+            process.
+          </p>
+          <a
+            href="mailto:phicos.id@gmail.com"
+            class="text-[#A9CE3C] font-bold hover:underline flex items-center gap-2"
+          >
+            phicos.id@gmail.com
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

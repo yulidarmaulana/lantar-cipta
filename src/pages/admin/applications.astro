@@ -1,0 +1,8 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import ApplicationDashboard from "../../components/react/ApplicationDashboard";
+---
+
+<DashboardLayout title="Job Applications">
+  <ApplicationDashboard client:only="react" />
+</DashboardLayout>

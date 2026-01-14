@@ -11,7 +11,7 @@ export const NAVIGATION = [
   { name: 'About Us', href: '/capabilities' },
   { name: 'Portofolio', href: '/portfolio' },
   // { name: 'Services', href: '/facilities' },
-  { name: 'Career', href: '/rfq' },
+  { name: 'Career', href: '/career' },
   { name: 'Documentation', href: '/documentation' },
 ] as const;
 

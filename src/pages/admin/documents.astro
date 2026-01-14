@@ -1,0 +1,8 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import DocumentDashboard from "../../components/react/DocumentDashboard";
+---
+
+<DashboardLayout title="Documents Management">
+  <DocumentDashboard client:only="react" />
+</DashboardLayout>

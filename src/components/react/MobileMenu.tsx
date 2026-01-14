@@ -34,10 +34,10 @@ export default function MobileMenu() {
             <div className="pt-4">
               <Dialog.Close asChild>
                 <a
-                  href={`${baseUrl}/rfq`}
-                  className="block text-center px-6 py-3 text-sm font-semibold text-white bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg shadow-md transition-all"
+                  href={`${baseUrl}/career`}
+                  className="block text-center px-6 py-3 text-sm font-semibold text-white bg-linear-to-r from-[#A9CE3C] to-[#8FAF33] hover:from-[#96B835] hover:to-[#7E9E2E] rounded-lg shadow-md transition-all"
                 >
-                  Career
+                  Join Our Team
                 </a>
               </Dialog.Close>
             </div>

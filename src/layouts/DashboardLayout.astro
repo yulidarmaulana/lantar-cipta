@@ -9,6 +9,8 @@ import {
   ExternalLink,
   Package,
   HelpCircle,
+  ClipboardList,
+  FileText,
 } from "lucide-react";
 
 interface Props {
@@ -77,6 +79,18 @@ const currentPath = Astro.url.pathname;
           </a>
 
           <a
+            href={`${baseUrl}/admin/applications`}
+            class={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+              currentPath.includes("/admin/applications")
+                ? "bg-[#A9CE3C]/10 text-[#A9CE3C]"
+                : "text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <ClipboardList className="w-5 h-5" />
+            Applications
+          </a>
+
+          <a
             href={`${baseUrl}/admin/faq`}
             class={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
               currentPath.includes("/admin/faq")
@@ -86,6 +100,18 @@ const currentPath = Astro.url.pathname;
           >
             <HelpCircle className="w-5 h-5" />
             FAQs
+          </a>
+
+          <a
+            href={`${baseUrl}/admin/documents`}
+            class={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+              currentPath.includes("/admin/documents")
+                ? "bg-[#A9CE3C]/10 text-[#A9CE3C]"
+                : "text-slate-400 hover:text-white hover:bg-slate-800"
+            }`}
+          >
+            <FileText className="w-5 h-5" />
+            Documents
           </a>
 
           <div
