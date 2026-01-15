@@ -8,7 +8,7 @@ export const SITE = {
 
 export const NAVIGATION = [
   { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/capabilities' },
+  { name: 'About Us', href: '/about' },
   { name: 'Portofolio', href: '/portfolio' },
   // { name: 'Services', href: '/facilities' },
   { name: 'Career', href: '/career' },

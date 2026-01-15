@@ -12,7 +12,7 @@ interface Props {
   capabilities: Capability[];
 }
 
-export default function CapabilityAccordion({ capabilities }: Props) {
+export default function AboutAccordion({ capabilities }: Props) {
   return (
     <Accordion.Root type="single" collapsible className="space-y-4">
       {capabilities.map((capability, index) => (
