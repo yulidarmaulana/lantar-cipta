@@ -10,30 +10,17 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
   description="Login to your Lantar Cipta Media account"
 >
   <section
-    class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-slate-50 via-blue-50 to-teal-50"
+    class="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
-    <div class="max-w-md w-full space-y-8">
-      <!-- Logo and Header -->
-      <div class="text-center">
-        <img
-          src={`${baseUrl}/favicon-lcm.png`}
-          alt="Lantar Cipta Media Logo"
-          class="mx-auto h-16 w-16 mb-4"
-        />
-        <h2 class="text-3xl font-bold text-slate-900 mb-2">
-          Welcome Lantar Cipta Media
-        </h2>
-        <p class="text-slate-600">Sign in to your account to continue</p>
-      </div>
-
-      <!-- Login Form Card Island -->
+    <div class="max-w-md w-full flex flex-col items-center">
+      <!-- Login Form Card -->
       <LoginForm client:load />
 
       <!-- Back to Home -->
-      <div class="text-center mt-6">
+      <div class="text-center mt-8">
         <a
           href={`${baseUrl}/`}
-          class="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 transition-colors"
+          class="inline-flex items-center text-sm font-medium text-white/80 hover:text-white transition-colors bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
         >
           <svg
             class="w-4 h-4 mr-2"

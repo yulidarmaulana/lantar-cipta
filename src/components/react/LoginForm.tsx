@@ -40,21 +40,35 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-8 border border-slate-100">
-      <form className="space-y-6" onSubmit={handleLogin}>
+    <div className="bg-white rounded-[2.5rem] shadow-2xl p-10 max-w-lg w-full border border-white/20 backdrop-blur-sm">
+      <div className="text-center mb-10">
+        <img
+          src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon-lcm.png`}
+          alt="Lantar Cipta Media Logo"
+          className="mx-auto h-16 w-16 mb-6"
+        />
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">
+          Sign in to your account
+        </h2>
+        <p className="text-slate-500 text-sm">
+          Enter your email & password to login
+        </p>
+      </div>
+
+      <form className="space-y-8" onSubmit={handleLogin}>
         {error && (
-          <div className="p-4 bg-red-50 border border-red-100 text-red-600 text-sm rounded-lg flex items-center gap-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="p-4 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl flex items-center gap-2">
+            <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            {error}
+            <span className="truncate">{error}</span>
           </div>
         )}
 
         {/* Email Input */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-            Email Address
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-sm font-medium text-slate-700 ml-1">
+            Email or Username
           </label>
           <input
             id="email"
@@ -62,30 +76,30 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="appearance-none relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A9CE3C] focus:border-transparent transition-all"
+            className="w-full px-5 py-4 bg-slate-50 border border-slate-200 placeholder-slate-400 text-slate-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8CC64C] focus:bg-white transition-all shadow-sm"
             placeholder="Enter your email"
           />
         </div>
 
         {/* Password Input */}
-        <div>
-          <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
+        <div className="space-y-2">
+          <label htmlFor="password" className="block text-sm font-medium text-slate-700 ml-1">
             Password
           </label>
-          <div className="relative">
+          <div className="relative group">
             <input
               id="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="appearance-none relative block w-full px-4 py-3 pr-12 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A9CE3C] focus:border-transparent transition-all"
+              className="w-full px-5 py-4 bg-slate-50 border border-slate-200 placeholder-slate-400 text-slate-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8CC64C] focus:bg-white transition-all shadow-sm"
               placeholder="Enter your password"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-[#8CC64C] transition-colors"
             >
               {showPassword ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,17 +116,12 @@ export default function LoginForm() {
         </div>
 
         {/* Submit Button */}
-        <div>
+        <div className="flex justify-center pt-2">
           <button
             type="submit"
             disabled={isLoading}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-linear-to-r from-[#A9CE3C] to-[#8FAF33] hover:from-[#96B835] hover:to-[#7E9E2E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#A9CE3C] shadow-md shadow-[#A9CE3C]/40 hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-10 py-3 text-sm font-bold rounded-lg text-white bg-[#8CC64C] hover:bg-[#7db144] focus:outline-none focus:ring-4 focus:ring-[#8CC64C]/30 shadow-lg shadow-[#8CC64C]/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider"
           >
-            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-              <svg className="h-5 w-5 text-white/80 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-            </span>
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
         </div>
